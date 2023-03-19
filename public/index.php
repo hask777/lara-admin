@@ -53,3 +53,12 @@ $response = $kernel->handle(
 )->send();
 
 $kernel->terminate($request, $response);
+
+require __DIR__ . '/../config/init.php';
+require_once __DIR__ . '/../config/params.php';
+
+new \App\SBlog\Core\BlogApp();
+
+
+
+dd($allowed_hosts);
