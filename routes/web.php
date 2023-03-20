@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Blog\Admin\MainController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +23,8 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+// Profile
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -29,3 +32,19 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+/** Admin Side **/
+
+
+Route::middleware(['status', 'auth'])->group(function (){
+    $groupdData = [
+        'namespace' => '\App\Http\Controllers\Blog\Admin',
+        'prefix' => 'admin'
+    ];
+
+    Route::group($groupdData, function(){
+        Route::resource('/index', MainController::class)->names('blog.admin.index');
+    });
+});
+
+
