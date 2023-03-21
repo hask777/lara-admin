@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Blog\Admin\MainController;
+//use App\Http\Controllers\Blog\Admin\MainController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,13 +38,14 @@ require __DIR__.'/auth.php';
 
 Route::middleware(['status', 'auth'])->group(function (){
     $groupdData = [
-        'namespace' => '\App\Http\Controllers\Blog\Admin',
+        'namespace' => 'App\Http\Controllers\Blog\Admin',
         'prefix' => 'admin'
     ];
 
     Route::group($groupdData, function(){
         Route::resource('/index', MainController::class)->names('blog.admin.index');
+
     });
 });
 
-
+Route::get('user/index', [App\Http\Controllers\Blog\User\MainController::class, 'index']);

@@ -83,13 +83,16 @@
 
                 @if(Auth::user()->isDisabled())
                     <strong>  <a href="{{ url('/') }}" style="color: #0b3e6f; text-decoration: none">Главная</a></strong>
+
                 @elseif(Auth::user()->isUser())
                     <strong>  <a href="{{ url('/user/index') }}" style="color: #0b3e6f; text-decoration: none">Кабинет</a></strong>
                     <strong>  <a href="{{ url('/') }}" style="color: #0b3e6f; text-decoration: none">Главная</a></strong>
+
                 @elseif(Auth::user()->isVisitor())
                     <strong>   <a href="{{ url('/') }}" style="color: #0b3e6f; text-decoration: none">Главная</a></strong>
+
                 @elseif(Auth::user()->isAdministrator())
-                    <strong><a href="{{ route('dashboard') }}" style="color: #0b3e6f; text-decoration: none; cursor: pointer">Панель Администратора</a></strong>
+                    <strong><a href="{{ url('/admin/index') }}" style="color: #0b3e6f; text-decoration: none; cursor: pointer">Панель Администратора</a></strong>
                     <strong> <a href="{{ url('/') }}" style="color: #0b3e6f; text-decoration: none">Главная</a></strong>
                 @endif
 

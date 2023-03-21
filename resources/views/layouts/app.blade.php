@@ -28,14 +28,19 @@
             @endif
 
             <!-- Page Content -->
-            <main>
-                {{ $slot }}
+            <main id="app">
+{{--                {{ $slot }}--}}
+                @yield('content')
             </main>
+
+
 
         </div>
     </body>
 </html>
-{{--    <!DOCTYPE html>--}}
+
+
+{{--<!DOCTYPE html>--}}
 {{--<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">--}}
 {{--<head>--}}
 {{--    <meta charset="utf-8">--}}

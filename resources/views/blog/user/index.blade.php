@@ -1,4 +1,5 @@
-@extends('Downloads.laravel-admin-panel-master.laravel-admin-panel-master.resources.views.layouts.app')
+{{--@extends('Downloads.laravel-admin-panel-master.laravel-admin-panel-master.resources.views.layouts.app')--}}
+@extends('layouts.app')
 
 @section('content')
     <div class="container">
