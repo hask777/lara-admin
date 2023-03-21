@@ -6,11 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     {{--<base href="/adminlte/">--}}
     <link rel="shortcut icon" href="" type="image/png" />
-    <title>{!! MetaTag::tag('title') !!}</title>
+    <title></title>
 <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
-    <link rel="stylesheet" href="{{asset('adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{url('adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
     <!-- Для select связанные товары в админке добавить товар -->
     <link rel="stylesheet" href="{{asset('adminlte/bower_components/select2/dist/css/select2.css')}}">
     <!-- Font Awesome -->
@@ -25,6 +25,8 @@
     <link rel="stylesheet" href="{{asset('adminlte/dist/css/skins/_all-skins.min.css')}}">
 
     <link rel="stylesheet" href="{{asset('css/my.css')}}">
+
+
 
 
 
@@ -86,7 +88,7 @@
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="{{route('blog.admin.users.edit',Auth::user()->id)}}" class="btn btn-default btn-flat">Профиль</a>
+                                    <!-- <a href="" class="btn btn-default btn-flat">Профиль</a> -->
                                 </div>
                                 <div class="pull-right">
                                     <a href="{{ route('logout') }}" onclick="event.preventDefault();
@@ -127,7 +129,7 @@
                 <!-- Optionally, you can add icons to the links -->
                 <li><a href="/"><i class="fa fa-home"></i> <span>В магазин</span></a></li>
                 <li><a href="{{route('blog.admin.index.index')}}"><i class="fa fa-user"></i> <span>Главная админки</span></a></li>
-                <li><a href="{{route('blog.admin.orders.index')}}"><i class="fa fa-shopping-cart"></i> <span>Заказы</span></a></li>
+                <li><a href=""><i class="fa fa-shopping-cart"></i> <span>Заказы</span></a></li>
 
 
 
@@ -138,8 +140,8 @@
               </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{route('blog.admin.categories.index')}}">Список категорий</a></li>
-                        <li><a href="{{route('blog.admin.categories.create')}}">Добавить категорию</a></li>
+                        <li><a href="">Список категорий</a></li>
+                        <li><a href="">Добавить категорию</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
@@ -149,11 +151,11 @@
               </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{route('blog.admin.products.index')}}">Список товаров</a></li>
-                        <li><a href="{{route('blog.admin.products.create')}}">Добавить товар</a></li>
+                        <li><a href="">Список товаров</a></li>
+                        <li><a href="">Добавить товар</a></li>
                     </ul>
                 </li>
-                <li><a href="{{route('blog.admin.cache')}}"><i class="fa fa-database"></i> <span>Кэширование</span></a></li>
+                <li><a href=""><i class="fa fa-database"></i> <span>Кэширование</span></a></li>
                 <li class="treeview">
                     <a href="#"><i class="fa fa-users"></i> <span>Пользователи</span>
                         <span class="pull-right-container">
@@ -161,8 +163,8 @@
               </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{route('blog.admin.users.index')}}">Список пользователей</a></li>
-                        <li><a href="{{route('blog.admin.users.create')}}">Добавить пользователя</a></li>
+                        <li><a href="">Список пользователей</a></li>
+                        <li><a href="">Добавить пользователя</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
@@ -172,8 +174,8 @@
 </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{url('/admin/currency/index')}}">Список валют</a></li>
-                        <li><a href="{{url('/admin/currency/add')}}">Добавить валюту</a></li>
+                        <li><a href="">Список валют</a></li>
+                        <li><a href="">Добавить валюту</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
@@ -183,8 +185,8 @@
 </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{url('admin/filter/group-filter')}}">Группы фильтров</a></li>
-                        <li><a href="{{url('admin/filter/attributes-filter')}}">Фильтры</a></li>
+                        <li><a href="">Группы фильтров</a></li>
+                        <li><a href="">Фильтры</a></li>
                     </ul>
                 </li>
             </ul>
