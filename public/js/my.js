@@ -1,4 +1,4 @@
-jQuery(document).ready(function($) {
+// jQuery(document).ready(function($) {
     /** Подтверждение удаление Категории */
     $('.delete').click(function () {
         var res = confirm('Подтвердите действие');
@@ -93,6 +93,6 @@ jQuery(document).ready(function($) {
      * resources/views/layouts/app_admin.blade.php
      *
      * */
-});
+// });
 
 
