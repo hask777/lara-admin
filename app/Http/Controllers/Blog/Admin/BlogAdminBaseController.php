@@ -13,10 +13,5 @@ abstract class BlogAdminBaseController extends MainBaseController
         $this->middleware('auth');
         $this->middleware('status');
 
-//        MetaTag::setTags(
-//            [
-//
-//            ]
-//        );
     }
 }
