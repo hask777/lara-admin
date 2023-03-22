@@ -185,8 +185,8 @@ return [
         /*
          * Package Service Providers...
          */
-        // Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
-       
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+
 
         /*
          * Application Service Providers...
@@ -212,7 +212,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
-        'MetaTag' => Fomvasss\LaravelMetaTags\Facades::class,
+        'MetaTag' => Fomvasss\LaravelMetaTags\Facade::class,
 
     ])->toArray(),
 
