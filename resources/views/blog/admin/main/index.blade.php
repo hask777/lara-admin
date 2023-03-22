@@ -2,13 +2,13 @@
 @section('content')
 
     <!-- Content Header (Page header) -->
-{{--    <section class="content-header">--}}
-{{--        @component('blog.admin.components.breadcrumb')--}}
-{{--            @slot('title') Панель упраления @endslot--}}
-{{--            @slot('parent') Главная @endslot--}}
-{{--            @slot('active')  @endslot--}}
-{{--        @endcomponent--}}
-{{--    </section>--}}
+   <section class="content-header">
+       @component('blog.admin.components.breadcrumb')
+           @slot('title') Панель упраления @endslot
+           @slot('parent') Главная @endslot
+           @slot('active')  @endslot
+       @endcomponent
+   </section>
 
     <!-- Main content -->
     <section class="content">
