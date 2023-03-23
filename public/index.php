@@ -61,4 +61,4 @@ new \App\SBlog\Core\BlogApp();
 
 
 
-dd($allowed_hosts);
+//dd($allowed_hosts);

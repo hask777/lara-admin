@@ -43,7 +43,11 @@ Route::middleware(['status', 'auth'])->group(function (){
     ];
 
     Route::group($groupdData, function(){
-        Route::resource('/index', MainController::class)->names('blog.admin.index');
+        Route::resource('/index', MainController::class)
+            ->names('blog.admin.index');
+
+        Route::resource('/orders', OrderConrtroller::class)
+            ->names('blog.admin.orders');
 
     });
 });

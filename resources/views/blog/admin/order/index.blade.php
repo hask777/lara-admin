@@ -1,5 +1,5 @@
 
-@extends('Downloads.laravel-admin-panel-master.laravel-admin-panel-master.resources.views.layouts.app_admin')
+@extends('layouts.app_admin')
 
 @section('content')
 
@@ -34,7 +34,6 @@
                             </thead>
                             <tbody>
 
-
                             @forelse($paginator as $order)
                                 @php $class = $order->status ? 'success' : '' @endphp
                             <tr class="{{$class}}">
@@ -50,10 +49,8 @@
                                 <td>{{$order->updated_at}}</td>
 
                                 <td>
-                                    <a href="{{route('blog.admin.orders.edit',$order->id)}}" title="редактировать заказ"><i class="fa fa-fw fa-eye"></i></a>&nbsp;&nbsp;&nbsp;
-
-                                    <a href="{{route('blog.admin.orders.forcedestroy', $order->id)}}" title="удалить из БД"><i class="fa fa-fw fa-close text-danger deletebd"></i></a>&nbsp;&nbsp;&nbsp;
-
+                                    <a href="{{route('blog.admin.orders.edit', $order->id)}}" title="редактировать заказ"><i class="fa fa-fw fa-eye"></i></a>&nbsp;&nbsp;&nbsp;
+                                    <a href="{{route('blog.admin.orders.edit', $order->id)}}" title="удалить из БД"><i class="fa fa-fw fa-close text-danger deletebd"></i></a>&nbsp;&nbsp;&nbsp;
 
                                 </td>
                             </tr>
@@ -94,3 +91,4 @@
 <!-- /.content -->
 
 @endsection
+

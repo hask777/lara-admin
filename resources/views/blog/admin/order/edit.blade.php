@@ -1,5 +1,5 @@
 
-@extends('Downloads.laravel-admin-panel-master.laravel-admin-panel-master.resources.views.layouts.app_admin')
+@extends('layouts.app_admin')
 
 @section('content')
 
@@ -11,14 +11,14 @@
         Заказ № {{$item->id}}
     <!-- если заказ новый не обработан то выведу и передадим status 1 -->
             @if (!$order->status)
-                <a href="{{route('blog.admin.orders.change',$item->id)}}/?status=1" class="btn btn-success btn-xs">Обобрить</a>
+                <a href="" class="btn btn-success btn-xs">Обобрить</a>
                 <a href="#" class="btn btn-warning btn-xs redact">Редактировать</a>
                 @else
-                <a href="{{route('blog.admin.orders.change',$item->id)}}/?status=0" class="btn btn-default btn-xs">Вернуть на доработку</a>
+                <a href="" class="btn btn-default btn-xs">Вернуть на доработку</a>
             @endif
 
         <a class="btn btn-xs" href="">
-            <form id="delform" method="post" action="{{route('blog.admin.orders.destroy', $item->id)}}"
+            <form id="delform" method="post" action=""
                   style="float: none">
                 @method('DELETE')
                 @csrf
@@ -43,7 +43,7 @@
             <div class="box">
                 <div class="box-body">
                     <div class="table-responsive">
-                        <form action="{{route('blog.admin.orders.save',$item->id)}}" method="post">
+                        <form action="" method="post">
 
                             @csrf
                             <table class="table table-bordered table-hover">
