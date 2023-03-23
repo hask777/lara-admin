@@ -22,11 +22,11 @@ class OrderConrtroller extends BlogAdminBaseController
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
-        $perpage = 5;
+        $perpage = 10;
         $countOrders = MainRepository::getCountOrders();
         $paginator = $this->orderRepository->getAllOrders($perpage);
 
@@ -38,43 +38,12 @@ class OrderConrtroller extends BlogAdminBaseController
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit($id)
     {
@@ -103,6 +72,65 @@ class OrderConrtroller extends BlogAdminBaseController
     }
 
     /**
+     * change status 0 or 1 in admin/orders/$id/edit
+     */
+    public function change($id)
+    {
+        $result = $this->orderRepository->changeStatusOrder($id);
+
+        if ($result) {
+            return redirect()
+                ->route('blog.admin.orders.edit', $id)
+                ->with(['success' => 'Успешно сохранено']);
+        } else {
+            return back()
+                ->withErrors(['msg' => "Ошибка сохранения"]);
+        }
+
+    }
+
+//    /** Change Status for Order */
+//    public function changeStatusOrder($id)
+//    {
+//        $item = $this->getEditId($id);
+//        if (!$item) {
+//            abort(404);
+//        }
+//        $item->status = !empty($_GET['status']) ? '1' : '0';
+//        $result = $item->update();
+//        return $result;
+//    }
+
+
+
+//    /** Save Comment in Edit Order */
+//    public function saveOrderComment($id)
+//    {
+//        $item = $this->getEditId($id);
+//        if (!$item) {
+//            abort(404);
+//        }
+//        $item->note = !empty($_POST['comment']) ? $_POST['comment'] : null;
+//        $result = $item->update();
+//        return $result;
+//    }
+
+
+
+//    /** Soft Delete one Order */
+//    public function changeStatusOnDelete($id)
+//    {
+//        $item = $this->getEditId($id);
+//        if (!$item) {
+//            abort(404);
+//        }
+//        $item->status = '2';
+//        $result = $item->update();
+//        return $result;
+//    }
+
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -114,14 +142,5 @@ class OrderConrtroller extends BlogAdminBaseController
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+
 }

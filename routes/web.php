@@ -49,6 +49,15 @@ Route::middleware(['status', 'auth'])->group(function (){
         Route::resource('/orders', OrderConrtroller::class)
             ->names('blog.admin.orders');
 
+        Route::get('/orders/change/{id}', [\App\Http\Controllers\Blog\Admin\OrderConrtroller::class, 'change'])
+            ->name('blog.admin.orders.change');
+
+        Route::post('/orders/save/{id}', [\App\Http\Controllers\Blog\Admin\OrderConrtroller::class, 'save'])
+            ->name('blog.admin.orders.save');
+
+        Route::post('/orders/forcedestroy/{id}', [\App\Http\Controllers\Blog\Admin\OrderConrtroller::class, 'destroy'])
+            ->name('blog.admin.orders.forcedestroy');
+
     });
 });
 

@@ -11,13 +11,13 @@
         Заказ № {{$item->id}}
     <!-- если заказ новый не обработан то выведу и передадим status 1 -->
             @if (!$order->status)
-                <a href="" class="btn btn-success btn-xs">Обобрить</a>
-                <a href="#" class="btn btn-warning btn-xs redact">Редактировать</a>
+                <a href="{{route('blog.admin.orders.change', $item->id)}}/?status=1" class="btn btn-success btn-xs">Одобрить</a>
+                <a href="" class="btn btn-warning btn-xs redact">Редактировать</a>
                 @else
-                <a href="" class="btn btn-default btn-xs">Вернуть на доработку</a>
+                <a href="{{route('blog.admin.orders.change', $item->id)}}/?status=0" class="btn btn-default btn-xs">Вернуть на доработку</a>
             @endif
 
-        <a class="btn btn-xs" href="">
+        <a class="btn btn-xs" href="{{route('blog.admin.orders.forcedestroy', $item->id)}}">
             <form id="delform" method="post" action=""
                   style="float: none">
                 @method('DELETE')
@@ -43,7 +43,7 @@
             <div class="box">
                 <div class="box-body">
                     <div class="table-responsive">
-                        <form action="" method="post">
+                        <form action="{{route('blog.admin.orders.save', $item->id)}}" method="post">
 
                             @csrf
                             <table class="table table-bordered table-hover">

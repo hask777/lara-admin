@@ -62,4 +62,16 @@ class OrderRepository extends CoreRepository
             ->get();
         return $orderProducts;
     }
+
+    /** Change Status for Order */
+    public function changeStatusOrder($id)
+    {
+        $item = $this->getId($id);
+        if (!$item) {
+            abort(404);
+        }
+        $item->status = !empty($_GET['status']) ? '1' : '0';
+        $result = $item->update();
+        return $result;
+    }
 }
