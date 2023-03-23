@@ -17,8 +17,8 @@
                 <a href="{{route('blog.admin.orders.change', $item->id)}}/?status=0" class="btn btn-default btn-xs">Вернуть на доработку</a>
             @endif
 
-        <a class="btn btn-xs" href="{{route('blog.admin.orders.forcedestroy', $item->id)}}">
-            <form id="delform" method="post" action=""
+        <a class="btn btn-xs" href="{{route('blog.admin.orders.destroy', $item->id)}}">
+            <form id="delform" method="post" action="{{route('blog.admin.orders.destroy', $item->id)}}"
                   style="float: none">
                 @method('DELETE')
                 @csrf

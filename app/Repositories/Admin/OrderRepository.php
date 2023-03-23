@@ -74,4 +74,28 @@ class OrderRepository extends CoreRepository
         $result = $item->update();
         return $result;
     }
+
+    /** Soft Delete one Order */
+    public function changeStatusOnDelete($id)
+    {
+        $item = $this->getId($id);
+        if (!$item) {
+            abort(404);
+        }
+        $item->status = '2';
+        $result = $item->update();
+        return $result;
+    }
+
+    /** Save Comment in Edit Order */
+    public function saveOrderComment($id)
+    {
+        $item = $this->getId($id);
+        if (!$item) {
+            abort(404);
+        }
+        $item->note = !empty($_POST['comment']) ? $_POST['comment'] : null;
+        $result = $item->update();
+        return $result;
+    }
 }
