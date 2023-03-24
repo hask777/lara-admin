@@ -1,6 +1,7 @@
-@extends('Downloads.laravel-admin-panel-master.laravel-admin-panel-master.resources.views.layouts.app_admin')
+@extends('layouts.app_admin')
 
 @section('content')
+
 
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -10,31 +11,32 @@
             @slot('active') Список меню категорий @endslot
         @endcomponent
     </section>
+    khj
 
-    <!-- Main content -->
-    <section class="content">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="box">
-                    <div class="box-body">
-                        <div width="100%">
-                            <small style="margin-left: 70px">Для редактирования - нажмите на категорию.</small>
-                            <small style="margin-left: 70px"> Невозможно удалять категории имеющие наследника или имеющие товары.</small>
-                        </div>
-                       <br>
-                        @if($menu)
-                            <div class="list-group list-group-root well">
+{{--    <!-- Main content -->--}}
+{{--    <section class="content">--}}
+{{--        <div class="row">--}}
+{{--            <div class="col-md-12">--}}
+{{--                <div class="box">--}}
+{{--                    <div class="box-body">--}}
+{{--                        <div width="100%">--}}
+{{--                            <small style="margin-left: 70px">Для редактирования - нажмите на категорию.</small>--}}
+{{--                            <small style="margin-left: 70px"> Невозможно удалять категории имеющие наследника или имеющие товары.</small>--}}
+{{--                        </div>--}}
+{{--                       <br>--}}
+{{--                        @if($menu)--}}
+{{--                            <div class="list-group list-group-root well">--}}
 
-                @include('blog.admin.category.menu.customMenuItems', ['items'=>$menu->roots()])
+{{--                @include('blog.admin.category.menu.customMenuItems', ['items'=>$menu->roots()])--}}
 
-                            </div>
-                        @endif
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- /.content -->
+{{--                            </div>--}}
+{{--                        @endif--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </section>--}}
+{{--    <!-- /.content -->--}}
 
 
 @endsection

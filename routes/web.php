@@ -42,7 +42,11 @@ Route::middleware(['status', 'auth'])->group(function (){
         'prefix' => 'admin'
     ];
 
+
     Route::group($groupdData, function(){
+
+        /** Orders Routes */
+
         Route::resource('/index', MainController::class)
             ->names('blog.admin.index');
 
@@ -61,7 +65,13 @@ Route::middleware(['status', 'auth'])->group(function (){
         Route::get('/orders/forcedestroy/{id}', [\App\Http\Controllers\Blog\Admin\OrderConrtroller::class, 'forcedestroy'])
             ->name('blog.admin.orders.forcedestroy');
 
+        /** Category Routes */
+
+        Route::resource('/categories', CategoryController::class)
+            ->names('blog.admin.categories');
+
     });
+
 });
 
 Route::get('user/index', [App\Http\Controllers\Blog\User\MainController::class, 'index']);
