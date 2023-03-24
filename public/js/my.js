@@ -1,4 +1,13 @@
 // jQuery(document).ready(function($) {
+    /** Закрытие меню на старт **/
+
+    $(function () {
+        $(".sidebar-menu li").each(function (i) {
+            $(this).removeClass("active menu-open");
+        });
+    });
+
+
     /** Подтверждение удаление Категории */
     $('.delete').click(function () {
         var res = confirm('Подтвердите действие');
