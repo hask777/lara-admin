@@ -23,6 +23,12 @@ class Category extends Model
         'deleted_at',
     ];
 
+    protected $attributes = [
+
+        'alias' => 'alias',
+
+    ];
+
 
     /**
      * for search category children in edit category

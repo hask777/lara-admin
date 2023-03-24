@@ -1,6 +1,8 @@
 <?php
 
-//use App\Http\Controllers\Blog\Admin\MainController;
+use App\Http\Controllers\Blog\Admin\CategoryController;
+use App\Http\Controllers\Blog\Admin\MainController;
+use App\Http\Controllers\Blog\Admin\OrderConrtroller;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -67,8 +69,19 @@ Route::middleware(['status', 'auth'])->group(function (){
 
         /** Category Routes */
 
+        Route::get('/categories/mydel',[CategoryController::class, 'mydel'])
+            ->name('blog.admin.categories.mydel');
+
         Route::resource('/categories', CategoryController::class)
             ->names('blog.admin.categories');
+
+
+
+
+
+
+
+
 
     });
 

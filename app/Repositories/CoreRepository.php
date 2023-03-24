@@ -44,7 +44,7 @@ abstract class CoreRepository
         }
         $id = !empty($data[$id]) ? (int)$data[$id] : null;
 
-        if(!id){
+        if(!$id){
             throw new \Exception('Проверить id', 404);
         }
 
