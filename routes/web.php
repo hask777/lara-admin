@@ -3,6 +3,7 @@
 use App\Http\Controllers\Blog\Admin\CategoryController;
 use App\Http\Controllers\Blog\Admin\MainController;
 use App\Http\Controllers\Blog\Admin\OrderConrtroller;
+use App\Http\Controllers\Blog\Admin\UserController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -74,6 +75,9 @@ Route::middleware(['status', 'auth'])->group(function (){
 
         Route::resource('/categories', CategoryController::class)
             ->names('blog.admin.categories');
+
+        Route::resource('/users', UserController::class)
+            ->names('blog.admin.users');
 
 
 

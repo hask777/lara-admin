@@ -1,5 +1,5 @@
 
-@extends('Downloads.laravel-admin-panel-master.laravel-admin-panel-master.resources.views.layouts.app_admin')
+@extends('layouts.app_admin')
 
 @section('content')
 

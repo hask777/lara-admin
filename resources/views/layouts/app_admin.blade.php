@@ -157,14 +157,14 @@
                 </li>
                 <li><a href=""><i class="fa fa-database"></i> <span>Кэширование</span></a></li>
                 <li class="treeview">
-                    <a href="#"><i class="fa fa-users"></i> <span>Пользователи</span>
+                    <a href="{{route('blog.admin.users.index')}}"><i class="fa fa-users"></i> <span>Пользователи</span>
                         <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="">Список пользователей</a></li>
-                        <li><a href="">Добавить пользователя</a></li>
+                        <li><a href="{{route('blog.admin.users.index')}}">Список пользователей</a></li>
+                        <li><a href="{{route('blog.admin.users.create')}}">Добавить пользователя</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
