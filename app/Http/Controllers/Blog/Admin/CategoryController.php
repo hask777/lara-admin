@@ -104,11 +104,23 @@ class CategoryController extends BlogAdminBaseController
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit($id)
+    public function edit($id, CategoryRepository $categoryRepository)
     {
-        //
+        $item = $this->categoryRepository->getId($id);
+        if (empty($item)){
+            abort(404);
+        }
+
+        $categoryList = $this->categoryRepository->getComboBoxCategories();
+
+        MetaTag::setTags(['title' => 'Редактирование категории']);
+        return view('blog.admin.category.edit',[
+            'categories' => Category::with('children')->where('parent_id','0')->get(),
+            'delimiter' => '-',
+            'item' => $item,
+        ]);
     }
 
     /**
@@ -116,22 +128,39 @@ class CategoryController extends BlogAdminBaseController
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(BlogCategoryUpdateRequest $request, $id)
     {
-        //
+        $item = $this->categoryRepository->getId($id);
+        if (empty($item)){
+            return back()
+                ->withErrors(['msg' => "Запись = [{$id}] не найдена"])
+                ->withInput();
+        }
+
+        $data = $request->all();
+        $result = $item->update($data);
+        if ($result){
+            return redirect()
+                ->route('blog.admin.categories.edit', $item->id)
+                ->with(['success' => "Успешно сохранено"]);
+        } else {
+            return back()
+                ->withErrors(['msg' => 'Ошибка сохранения!'])
+                ->withInput();
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function destroy($id)
     {
-        //
+        return view('blog.admin.category.index');
     }
 
     /**

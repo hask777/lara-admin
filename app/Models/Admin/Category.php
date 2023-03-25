@@ -23,11 +23,11 @@ class Category extends Model
         'deleted_at',
     ];
 
-    protected $attributes = [
-
-        'alias' => 'alias',
-
-    ];
+//    protected $attributes = [
+//
+//        'alias' => 'alias',
+//
+//    ];
 
 
     /**
