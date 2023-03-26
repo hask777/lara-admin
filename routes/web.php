@@ -3,6 +3,7 @@
 use App\Http\Controllers\Blog\Admin\CategoryController;
 use App\Http\Controllers\Blog\Admin\MainController;
 use App\Http\Controllers\Blog\Admin\OrderConrtroller;
+use App\Http\Controllers\Blog\Admin\ProductController;
 use App\Http\Controllers\Blog\Admin\UserController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -48,8 +49,8 @@ Route::middleware(['status', 'auth'])->group(function (){
 
     Route::group($groupdData, function(){
 
-        /** Orders Routes */
 
+        /** Orders Routes */
         Route::resource('/index', MainController::class)
             ->names('blog.admin.index');
 
@@ -68,8 +69,8 @@ Route::middleware(['status', 'auth'])->group(function (){
         Route::get('/orders/forcedestroy/{id}', [\App\Http\Controllers\Blog\Admin\OrderConrtroller::class, 'forcedestroy'])
             ->name('blog.admin.orders.forcedestroy');
 
-        /** Category Routes */
 
+        /** Category Routes */
         Route::get('/categories/mydel',[CategoryController::class, 'mydel'])
             ->name('blog.admin.categories.mydel');
 
@@ -78,6 +79,11 @@ Route::middleware(['status', 'auth'])->group(function (){
 
         Route::resource('/users', UserController::class)
             ->names('blog.admin.users');
+
+
+        /** Product Routes */
+        Route::resource('/products',ProductController::class)
+            ->names('blog.admin.products');
 
 
 
