@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Blog\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AdminProductsCreateRequest;
+use App\Models\Admin\Category;
+use App\Models\Admin\Product;
 use App\Repositories\Admin\ProductRepository;
 use Illuminate\Http\Request;
 use MetaTag;
@@ -37,22 +40,69 @@ class ProductController extends BlogAdminBaseController
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function create()
     {
-        //
+        //\Session::flush();
+        $item = new Category();
+        MetaTag::setTags(['title' => 'Создание нового товара']);
+        return view('blog.admin.product.create', [
+            'categories' => Category::with('children')->where('parent_id', '0')
+                ->get(),
+            'delimiter' => '-',
+            'item' => $item,
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(AdminProductsCreateRequest $request)
     {
-        //
+        $data = $request->input();
+        $product = (new Product())->create($data);
+        $id = $product->id;
+        $product->status = $request->status ? '1' : '0';
+        $product->hit = $request->hit ? '1' : '0';
+        $product->category_id = $request->parent_id ?? '0';
+        $this->productRepository->getImg($product);
+        $save = $product->save();
+        if ($save) {
+            $this->productRepository->editFilter($id, $data);
+            $this->productRepository->editRelatedProduct($id, $data);
+            $this->productRepository->saveGallery($id);
+            return redirect()
+                ->route('blog.admin.products.create', [$product->id])
+                ->with(['success' => 'Успешно сохранено']);
+        } else {
+            return back()
+                ->withErrors(['msg' => 'Ошибка сохранения'])
+                ->withInput();
+        }
+    }
+
+    /** Related Products
+     * @param Request $request
+     */
+    public function related(Request $request)
+    {
+        $q = isset($request->q) ? htmlspecialchars(trim($request->q)) : '';
+        $data['items'] = [];
+        $products = $this->productRepository->getProducts($q);
+        if ($products) {
+            $i = 0;
+            foreach ($products as $id => $title) {
+                $data['items'][$i]['id'] = $title->id;
+                $data['items'][$i]['text'] = $title->title;
+                $i++;
+            }
+        }
+        echo json_encode($data);
+        die;
     }
 
     /**

@@ -39,7 +39,7 @@
     $('.sidebar-menu a').each(function () {
     // window.location.protocol = http или https далее конкатенация . ‘//’ .  //далее хост window.location.host + и window.location.pathname
         var location = window.location.protocol + '//' + window.location.host + window.location.pathname;
-        console.log(location);
+        // console.log(location);
     //текущая ссылка в этом элементе '.sidebar-menu a'
         var link = this.href;
     //ну и сравниваю их
@@ -55,7 +55,7 @@
 
     /** KCFinder  */
 
-    // $( '#editor1' ).ckeditor();
+    $( '#editor1' ).ckeditor();
 
     /** ----------- */
 

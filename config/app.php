@@ -187,6 +187,7 @@ return [
          */
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Lavary\Menu\ServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
 
 
         /*
@@ -215,6 +216,7 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'MetaTag' => Fomvasss\LaravelMetaTags\Facade::class,
         'Menu'    => Lavary\Menu\Facade::class,
+        'Image' => Intervention\Image\Facades\Image::class
 
     ])->toArray(),
 

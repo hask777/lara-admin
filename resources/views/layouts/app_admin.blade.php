@@ -251,6 +251,7 @@
 
 <script>
     var pathd = '{{PATH}}';
+    console.log(pathd);
 </script>
 <!-- jQuery 3 -->
 <script src="{{asset('adminlte/bower_components/jquery/dist/jquery.min.js')}}"></script>

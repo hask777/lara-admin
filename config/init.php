@@ -29,6 +29,7 @@ $allowed_hosts = 'http://localhost:8000/index.php';
 $app_path = preg_replace("#[^/]+$#", '', $allowed_hosts);
 ////http://laravel.blog.san/
 $app_path = str_replace('/public/', '', $app_path);
+//dd($app_path);
 //
 if (!defined('PATH')) define('PATH', $app_path);
 if (!defined('ADMIN')) define('ADMIN', PATH . 'admin/index');

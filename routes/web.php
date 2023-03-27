@@ -82,8 +82,14 @@ Route::middleware(['status', 'auth'])->group(function (){
 
 
         /** Product Routes */
+
+        Route::get('/products/related',[ProductController::class, 'related']);
+
+
         Route::resource('/products',ProductController::class)
             ->names('blog.admin.products');
+
+
 
 
 
