@@ -196,4 +196,52 @@ class ProductController extends BlogAdminBaseController
         File::delete('uploads/single/' . $filename);
     }
 
+
+    /**
+     * Add Photo for Gallery Ajax from my.js
+     * @param Request $request
+     * @return array
+     */
+    public function gallery(Request $request)
+    {
+        $validator = \Validator::make($request->all(),
+            [
+                'file' => 'image|max:5000',
+            ],
+            [
+                'file.image' => 'Файл должен быть картинкой (jpeg, png, bmp, gif, or svg)',
+                'file.max' => 'Ошибка! Максимальный вес файла - 5 Мб!',
+            ]);
+        if ($validator->fails()) {
+            return array(
+                'fail' => true,
+                'errors' => $validator->errors()
+            );
+        }
+        if (isset($_GET['upload'])) {
+            $wmax = BlogApp::get_instance()->getProperty('gallery_width');
+            $hmax = BlogApp::get_instance()->getProperty('gallery_height');
+            $name = $_POST['name'];
+            $this->productRepository->uploadGallery($name, $wmax, $hmax);
+        }
+    }
+
+
+    /**
+     * Delete Gallery
+     */
+    public function deleteGallery()
+    {
+        $id = isset($_POST['id']) ? $_POST['id'] : null;
+        $src = isset($_POST['src']) ? $_POST['src'] : null;
+        if (!$id || !$src) {
+            return;
+        }
+        if (\DB::delete("DELETE FROM galleries WHERE product_id = ? AND img = ?", [$id, $src])) {
+            @unlink("uploads/gallery/$src");
+            exit('1');
+        }
+        return;
+    }
+
 }

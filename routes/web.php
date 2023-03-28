@@ -82,16 +82,31 @@ Route::middleware(['status', 'auth'])->group(function (){
 
 
         /** Product Routes */
-
+        // related products
         Route::get('/products/related',[ProductController::class, 'related']);
 
-
-        Route::resource('/products',ProductController::class)
-            ->names('blog.admin.products');
-
+        //product image
         Route::match(['get', 'post'], '/products/ajax-image-upload', [ProductController::class, 'ajaxImage']);
         Route::delete('/products/ajax-remove-image/{filename}', [ProductController::class, 'deleteImage']);
 
+        //product gallery
+        Route::post('/products/gallery',[ProductController::class, 'gallery'])
+            ->name('blog.admin.products.gallery');
+
+        Route::post('/products/delete-gallery',[ProductController::class, 'deleteGallery'])
+            ->name('blog.admin.products.deletegallery');
+
+        Route::get('/products/return-status/{id}',[ProductController::class, 'returnStatus'])
+            ->name('blog.admin.products.returnstatus');
+        Route::get('/products/delete-status/{id}',[ProductController::class, 'deleteStatus'])
+            ->name('blog.admin.products.deletestatus');
+        Route::get('/products/delete-product/{id}', [ProductController::class, 'deleteProduct'])
+            ->name('blog.admin.products.deleteproduct');
+
+
+        //products resource
+        Route::resource('/products',ProductController::class)
+            ->names('blog.admin.products');
 
 
 
