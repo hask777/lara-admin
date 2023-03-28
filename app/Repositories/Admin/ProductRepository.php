@@ -86,4 +86,195 @@ class ProductRepository extends CoreRepository
     }
 
 
+    /**
+     * Upload Single Image
+     */
+    public function uploadImg($name, $wmax, $hmax)
+    {
+        $uploaddir = 'uploads/single/';
+        $ext = strtolower(preg_replace("#.+\.([a-z]+)$#i", "$1", $name));
+        $uploadfile = $uploaddir . $name;
+        \Session::put('single', $name);
+        self::resize($uploadfile, $uploadfile, $wmax, $hmax, $ext);
+
+    }
+
+
+    /** Get Image for Create New Product
+     * @param Product $product
+     */
+    public function getImg(Product $product)
+    {
+        clearstatcache();
+        if (!empty(\Session::get('single'))) {
+            $name = \Session::get('single');
+            $product->img = $name;
+            \Session::forget('single');
+            return;
+        }
+        if (empty(\Session::get('single')) && !is_file(WWW . '/uploads/single/' . $product->img)) {
+            $product->img = null;
+        }
+        return;
+    }
+
+
+    /** Save Gallery Images
+     * @param $id
+     */
+    public function saveGallery($id)
+    {
+        if (!empty(\Session::get('gallery'))) {
+            $sql_part = '';
+            foreach (\Session::get('gallery') as $v) {
+                $sql_part .= "('$v', $id),";
+            }
+            $sql_part = rtrim($sql_part, ',');
+            \DB::insert("insert into galleries (img, product_id) VALUES $sql_part");
+            \Session::forget('gallery');
+        }
+    }
+
+
+    /**
+     *  Resize Images for My needs
+     */
+    public static function resize($target, $dest, $wmax, $hmax, $ext)
+    {
+        list($w_orig, $h_orig) = getimagesize($target);
+        $ratio = $w_orig / $h_orig;
+
+        if (($wmax / $hmax) > $ratio) {
+            $wmax = $hmax * $ratio;
+        } else {
+            $hmax = $wmax / $ratio;
+        }
+
+        $img = "";
+        // imagecreatefromjpeg | imagecreatefromgif | imagecreatefrompng
+        switch ($ext) {
+            case("gif"):
+                $img = imagecreatefromgif($target);
+                break;
+            case("png"):
+                $img = imagecreatefrompng($target);
+                break;
+            default:
+                $img = imagecreatefromjpeg($target);
+        }
+        $newImg = imagecreatetruecolor($wmax, $hmax);
+        if ($ext == "png") {
+            imagesavealpha($newImg, true);
+            $transPng = imagecolorallocatealpha($newImg, 0, 0, 0, 127);
+            imagefill($newImg, 0, 0, $transPng);
+        }
+        imagecopyresampled($newImg, $img, 0, 0, 0, 0, $wmax, $hmax, $w_orig,
+            $h_orig); // копируем и ресайзим изображение
+        switch ($ext) {
+            case("gif"):
+                imagegif($newImg, $dest);
+                break;
+            case("png"):
+                imagepng($newImg, $dest);
+                break;
+            default:
+                imagejpeg($newImg, $dest);
+        }
+        imagedestroy($newImg);
+    }
+
+    /**
+     *  Turn Status = 1
+     */
+    public function returnStatusOne($id)
+    {
+        if (isset($id)) {
+            $st = \DB::update("UPDATE products SET status = '1' WHERE id = ?", [$id]);
+            if ($st){
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    /**
+     *  Turn Status = 0
+     */
+    public function deleteStatusOne($id)
+    {
+        if (isset($id)) {
+            $st = \DB::update("UPDATE products SET status = '0' WHERE id = ?", [$id]);
+            if ($st){
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+
+    /**
+     *  Delete Gallery after del one product
+     */
+    public function deleteImgGalleryFromPath($id)
+    {
+        $galleryImg = \DB::table('galleries')
+            ->select('img')
+            ->where('product_id',$id)
+            ->pluck('img')
+            ->all();
+
+        $singleImg = \DB::table('products')
+            ->select('img')
+            ->where('id', $id)
+            ->pluck('img')
+            ->all();
+
+        if (!empty($galleryImg)){
+            foreach ($galleryImg as $img){
+                @unlink("uploads/gallery/$img");
+            }
+        }
+        if (!empty($singleImg)){
+            @unlink("uploads/single/".$singleImg[0]);
+        }
+
+    }
+
+
+//    /**
+//     * Delete from DB
+//     */
+//    public function deleteFromDB($id)
+//    {
+//        if (isset($id)){
+//            $related_product = \DB::delete('DELETE FROM related_products WHERE product_id = ?',[$id]);
+//            $attribute_product = \DB::delete('DELETE FROM attribute_products WHERE product_id = ?',[$id]);
+//            $gallery = \DB::delete('DELETE FROM galleries WHERE product_id = ?',[$id]);
+//            $product = \DB::delete('DELETE FROM products WHERE id = ?', [$id]);
+//
+//            if ($product){
+//                return true;
+//            }
+//        }
+//    }
+
+
+//    /**
+//     * Get Products for related
+//     */
+//    public function getProducts($q)
+//    {
+//        $products = \DB::table('products')
+//            ->select('id', 'title')
+//            ->where('title', 'LIKE', ["%{$q}%"])
+//            ->limit(8)
+//            ->get();
+//        return $products;
+//    }
+
+
+
+
 }

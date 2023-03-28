@@ -89,6 +89,9 @@ Route::middleware(['status', 'auth'])->group(function (){
         Route::resource('/products',ProductController::class)
             ->names('blog.admin.products');
 
+        Route::match(['get', 'post'], '/products/ajax-image-upload', [ProductController::class, 'ajaxImage']);
+        Route::delete('/products/ajax-remove-image/{filename}', [ProductController::class, 'deleteImage']);
+
 
 
 
