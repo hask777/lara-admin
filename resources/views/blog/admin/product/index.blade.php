@@ -45,14 +45,14 @@
                                     <a href="{{route('blog.admin.products.edit',$product->id)}}" title="Редактировать"><i class="fa fa-fw fa-eye"></i></a>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     @if ($product->status == 0)
-                                        <a class="delete" href="" title="Перевести status = On"><i class="fa fa-fw fa-refresh"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a class="delete" href="{{route('blog.admin.products.returnstatus',$product->id)}}" title="Перевести status = On"><i class="fa fa-fw fa-refresh"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
 
                                     @else
-                                        <a class="delete" href="" title="Перевести status = Off"><i class="fa fa-fw fa-close"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a class="delete" href="{{route('blog.admin.products.deletestatus',$product->id)}}" title="Перевести status = Off"><i class="fa fa-fw fa-close"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
                                     @endif
 
                                     @if ($product)
-                                        <a class="delete" href="" title="Удалить из БД"><i class="fa fa-fw fa-close text-danger"></i></a>
+                                        <a class="delete" href="{{route('blog.admin.products.deleteproduct',$product->id)}}" title="Удалить из БД"><i class="fa fa-fw fa-close text-danger"></i></a>
                                     @endif
 
                                 </td>

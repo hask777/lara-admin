@@ -78,7 +78,7 @@ class ProductController extends BlogAdminBaseController
             $this->productRepository->editRelatedProduct($id, $data);
             $this->productRepository->saveGallery($id);
             return redirect()
-                ->route('blog.admin.products.create', [$product->id])
+                ->route('blog.admin.products.edit', [$product->id])
                 ->with(['success' => 'Успешно сохранено']);
         } else {
             return back()
@@ -107,6 +107,8 @@ class ProductController extends BlogAdminBaseController
         die;
     }
 
+
+
     /**
      * Display the specified resource.
      *
@@ -118,28 +120,72 @@ class ProductController extends BlogAdminBaseController
         //
     }
 
+
+
+
     /**
-     * Show the form for editing the specified resource.
+     * EDIT One Product
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit($id)
     {
-        //
+        $product = $this->productRepository->getInfoProduct($id);
+        $id = $product->id;
+        BlogApp::get_instance()->setProperty('parent_id', $product->category_id);
+        $filter = $this->productRepository->getFiltersProduct($id);
+        $related_products = $this->productRepository->getRelatedProducts($id);
+        $images = $this->productRepository->getGallery($id);
+
+        MetaTag::setTags(['title' => "Редактирование товара № {$id}"]);
+        return view('blog.admin.product.edit', compact('product', 'images', 'filter', 'related_products', 'id'), [
+            'categories' => Category::with('children')->where('parent_id', '0')
+                ->get(),
+            'delimiter' => '-',
+            'product' => $product,
+        ]);
     }
 
+
+
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Update Product
+     * @param AdminProductsCreateRequest $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(AdminProductsCreateRequest $request, $id)
     {
-        //
+        $product = $this->productRepository->getId($id);
+        if (empty($product)) {
+            return back()
+                ->withErrors(['msg' => "Запись = [{$id}] не найдена"])
+                ->withInput();
+        }
+        $data = $request->all();
+        $result = $product->update($data);
+        $product->status = $request->status ? '1' : '0';
+        $product->hit = $request->hit ? '1' : '0';
+        $product->category_id = $request->parent_id ?? $product->category_id;
+        $this->productRepository->getImg($product);
+        $save = $product->save();
+
+        if ($result && $save) {
+            $this->productRepository->editFilter($id, $data);
+            $this->productRepository->editRelatedProduct($id, $data);
+            $this->productRepository->saveGallery($id);
+            return redirect()
+                ->route('blog.admin.products.edit', [$product->id])
+                ->with(['success' => 'Успешно сохранено']);
+        } else {
+            return back()
+                ->withErrors(['msg' => 'Ошибка сохранения'])
+                ->withInput();
+        }
     }
+
+
 
     /**
      * Remove the specified resource from storage.
@@ -188,6 +234,8 @@ class ProductController extends BlogAdminBaseController
         }
     }
 
+
+
     /**
      * Delete Image
      */
@@ -227,6 +275,7 @@ class ProductController extends BlogAdminBaseController
     }
 
 
+
     /**
      * Delete Gallery
      */
@@ -243,5 +292,69 @@ class ProductController extends BlogAdminBaseController
         }
         return;
     }
+
+
+
+    /**
+     * Return product status status = 1
+     */
+    public function returnStatus($id)
+    {
+        if ($id) {
+            $st = $this->productRepository->returnStatusOne($id);
+            if ($st) {
+                return redirect()
+                    ->route('blog.admin.products.index')
+                    ->with(['success' => 'Успешно сохранено']);
+            } else {
+                return back()
+                    ->withErrors(['msg' => 'Ошибка сохранения'])
+                    ->withInput();
+            }
+        }
+    }
+
+
+
+    /**
+     * Return product status status = 0
+     */
+    public function deleteStatus($id)
+    {
+        if ($id) {
+            $st = $this->productRepository->deleteStatusOne($id);
+            if ($st) {
+                return redirect()
+                    ->route('blog.admin.products.index')
+                    ->with(['success' => 'Успешно сохранено']);
+            } else {
+                return back()
+                    ->withErrors(['msg' => 'Ошибка сохранения'])
+                    ->withInput();
+            }
+        }
+    }
+
+
+    /**
+     * Delete One Product from DB
+     */
+    public function deleteProduct($id)
+    {
+        if ($id) {
+            $gal = $this->productRepository->deleteImgGalleryFromPath($id);
+            $db = $this->productRepository->deleteFromDB($id);;
+            if ($db) {
+                return redirect()
+                    ->route('blog.admin.products.index')
+                    ->with(['success' => 'Успешно удалено']);
+            } else {
+                return back()
+                    ->withErrors(['msg' => 'Ошибка удаления'])
+                    ->withInput();
+            }
+        }
+    }
+
 
 }

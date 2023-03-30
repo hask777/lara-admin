@@ -260,6 +260,48 @@ class ProductRepository extends CoreRepository
     }
 
 
+
+    /**
+     * Get Info for One Product by Id
+     */
+    public function getInfoProduct($id)
+    {
+        $product = $this->startConditions()
+            ->find($id);
+        return $product;
+    }
+
+
+
+    /**
+     * Get Filters One Product
+     */
+    public function getFiltersProduct($id)
+    {
+        $filter = \DB::table('attribute_products')
+            ->select('attr_id')
+            ->where('product_id', $id)
+            ->pluck('attr_id')
+            ->all();
+        return $filter;
+    }
+
+
+    /**
+     * Get Gallery for One Product
+     */
+    public function getGallery($id)
+    {
+        $gallery = \DB::table('galleries')
+            ->where('product_id', $id)
+            ->pluck('img')
+            ->all();
+        return $gallery;
+
+    }
+
+
+
     /**
      *  Resize Images for My needs
      */
@@ -307,6 +349,8 @@ class ProductRepository extends CoreRepository
         imagedestroy($newImg);
     }
 
+
+
     /**
      *  Turn Status = 1
      */
@@ -322,6 +366,8 @@ class ProductRepository extends CoreRepository
         }
     }
 
+
+
     /**
      *  Turn Status = 0
      */
@@ -336,6 +382,7 @@ class ProductRepository extends CoreRepository
             }
         }
     }
+
 
 
     /**
@@ -367,25 +414,21 @@ class ProductRepository extends CoreRepository
     }
 
 
-//    /**
-//     * Delete from DB
-//     */
-//    public function deleteFromDB($id)
-//    {
-//        if (isset($id)){
-//            $related_product = \DB::delete('DELETE FROM related_products WHERE product_id = ?',[$id]);
-//            $attribute_product = \DB::delete('DELETE FROM attribute_products WHERE product_id = ?',[$id]);
-//            $gallery = \DB::delete('DELETE FROM galleries WHERE product_id = ?',[$id]);
-//            $product = \DB::delete('DELETE FROM products WHERE id = ?', [$id]);
-//
-//            if ($product){
-//                return true;
-//            }
-//        }
-//    }
 
+    /** Delete from DB */
+    public function deleteFromDB($id)
+    {
+        if (isset($id)){
+            $related_product = \DB::delete('DELETE FROM related_products WHERE product_id = ?',[$id]);
+            $attribute_product = \DB::delete('DELETE FROM attribute_products WHERE product_id = ?',[$id]);
+            $gallery = \DB::delete('DELETE FROM galleries WHERE product_id = ?',[$id]);
+            $product = \DB::delete('DELETE FROM products WHERE id = ?', [$id]);
 
-
+            if ($product){
+                return true;
+            }
+        }
+    }
 
 
 

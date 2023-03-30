@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\DB;
         {
             $data = [];
 
-            for ($y = 1; $y <= 19; $y++) {
+            for ($y = 1; $y <= 12; $y+=4) {
                 for ($i = 1; $i <= 17; $i++) {
                     $data[] = [
                         'attr_id' => $y,
